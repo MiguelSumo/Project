@@ -1,6 +1,8 @@
-#Miguel Sumo 3/27/23
+#Miguel Sumo 4/03/23
 
 #stil need to add dictionary for login
+#still needs to make the receipt file
+
 #This function is for adding to items in the cart
 def ADD(list1,item,item_print):
 	x=0
@@ -24,7 +26,7 @@ def ADD(list1,item,item_print):
 			else:
 				print("error")
 			if more_items!="EXIT":
-				receipt[len(list1)]={"item":more_items,"color":shirt_color,"size":shirt_size}
+				receipt[len(list1)]={"item":more_items,"color":shirt_color,"size":shirt_size} #Code for adding to receipt dictionanry
 		#Jeans
 		elif more_items=="jeans":
 			list1.append("jeans")
@@ -43,7 +45,7 @@ def ADD(list1,item,item_print):
 			else:
 				print("error")
 			if more_items!="EXIT":
-				receipt[len(list1)]={"item":more_items,"color":jeans_color,"size":jeans_size}
+				receipt[len(list1)]={"item":more_items,"color":jeans_color,"size":jeans_size} #Code for adding to receipt dictionanry
 		#Shoes		
 		elif more_items=="shoes":
 			list1.append("shoes")
@@ -66,7 +68,7 @@ def ADD(list1,item,item_print):
 			else:
 				print("error")
 			if more_items!="EXIT":
-				receipt[len(list1)]={"item":more_items,"color":shoes_color,"size":shoes_size}
+				receipt[len(list1)]={"item":more_items,"color":shoes_color,"size":shoes_size} #Code for adding to receipt dictionanry
 		#Hoodie
 		elif more_items=="hoodie":
 			list1.append("hoodie")
@@ -85,7 +87,7 @@ def ADD(list1,item,item_print):
 			else:
 				print("error")
 			if more_items!="EXIT":
-				receipt[len(list1)]={"item":more_items,"color":hoodie_color,"size":hoodie_size}
+				receipt[len(list1)]={"item":more_items,"color":hoodie_color,"size":hoodie_size} #Code for adding to receipt dictionanry
 		#Shorts
 		elif more_items=="shorts":
 			list1.append("shorts")
@@ -108,14 +110,15 @@ def ADD(list1,item,item_print):
 			else:
 				print("error")
 			if more_items!="EXIT":
-				receipt[len(list1)]={"item":more_items,"color":shorts_color,"size":shorts_size}
+				receipt[len(list1)]={"item":more_items,"color":shorts_color,"size":shorts_size} #Code for adding to receipt dictionanry
 		else:
 			print("Error, please try again or type exit")
 	return(list1)
+#Code to reset the cart cost in loop #Very important or will get false cart cost
 def reset_cart(num1):
 	num1=0
 	return num1
-#This function is for removing items in the cart	
+#This function is for removing items in the cart and receipt dictionary
 def REMOVE(list1,item):
 	x=0
 	while x==0:
@@ -165,7 +168,7 @@ item = {
 }
 #Dictionary to make receipts
 receipt={}
-#class to display the costs 
+#Multi-level Class to display the costs 
 class shirts:
 	def s_display(self):
 		print("Shirt:$20.99")
@@ -202,7 +205,7 @@ class shorts(shoes):
 	def r_colors(self):
 		print("Colors are blue, red, yellow, and black")			
 item_print=shorts()		
-
+#function to display all the items
 def all_items(object1):		
 	object1.s_display()
 	object1.h_display()
@@ -210,6 +213,8 @@ def all_items(object1):
 	object1.o_display()
 	object1.r_display()
 all_items(item_print)
+
+
 #Getting User Input for items
 cart_item=[]
 store=0
@@ -319,10 +324,19 @@ while store==0:
 	if item_input=="exit":
 		break
 #Calling Member Discount Function
+members=0
+while members==0
 member_input=input("Are you a member? YES or NO:")
-	#Sign in for yes
-	#Ask to sign up for no
-	
+	if member_input=="YES":
+		ask_username=input("What is your username")
+	elif member_input=="NO":
+		non_member=input("Would you like to become a meber for 20% off this purchase?:YES or NO")
+		if non_member=="NO":
+			break
+		if non_member=="YES"
+			#This is where the member login needs to go
+			
+			
 #Confirming Cart
 cart_cost=0
 cart_confirmation=0
@@ -337,7 +351,7 @@ while cart_confirmation==0:
 	print("For $",round(float(cart_cost),2))
 	cart_answer=input("Does the cart look correct? YES or NO:")
 	if cart_answer=="YES":
-		print(receipt)
+		print(receipt) #This is where the receipt needs to make a new txt file and make a receipt on that file#
 		break
 	elif cart_answer=="NO":
 		all_items(item_print)
