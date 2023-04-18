@@ -1,7 +1,6 @@
-#Miguel Sumo 4/03/23
-
-#stil need to add dictionary for login
-#still needs to make the receipt file
+#Miguel Sumo 3/27/23
+#Fully Functional Code
+#Only problem is remove code deletes too much
 
 #This function is for adding to items in the cart
 def ADD(list1,item,item_print):
@@ -125,7 +124,7 @@ def REMOVE(list1,item):
 		remove_item=input("What # item would you like to remove? Type EXIT to be done:")
 		if remove_item=="EXIT":
 			break
-		#Shirt
+	
 		if receipt[int(remove_item)]["item"]=="shirt":
 			list1.remove("shirt")
 			item["shirt"]["quantity"]=item["shirt"]["quantity"]+1
@@ -141,13 +140,13 @@ def REMOVE(list1,item):
 		if receipt[int(remove_item)]["item"]=="shoes":
 			list1.remove("shoes")
 			item["shoes"]["quantity"]=item["shoes"]["quantity"]+1						
-		del receipt[int(remove_item)]
+		receipt[int(remove_item)]="removed item"
 
 	return(cart_item)
 #Dictionary for Logins
 passwords = {
     "Miguel222": "password1",
-    "Aboubacar345": "password2",
+    "Aboubacar345":"password2",
     "Lado111": "password3",
     "Arbab222": "password4",
 }
@@ -164,7 +163,7 @@ item = {
     "hoodie":{"price": 39.99, "size": ["S", "M", "L", "XL"], "color": ["black", "gray", "navy"], "quantity": 50},
     "jeans": {"price": 49.99, "size": ["28", "30", "32", "34"], "color": ["blue", "black"], "quantity": 75},
     "shoes": {"price": 89.99, "size": ["8", "9", "9.5", "10", "11", "12"], "color": ["blue", "black"], "quantity": 49},
-    "shorts":{ "price": 19.99, "size": ["S", "M", "L", "XL", "2XL"], "color": ["blue", "black", "red", "yellow"], "quantity": 120},
+    "shorts":{ "price": 19.99, "size": ["S", "M", "L", "XL", "XXL"], "color": ["blue", "black", "red", "yellow"], "quantity": 120},
 }
 #Dictionary to make receipts
 receipt={}
@@ -276,7 +275,7 @@ while store==0:
 				print("error")
 			receipt[x]={"item":item_input,"color":jeans_color,"size":jeans_size}
 		#SHOES
-		elif item_input=="Shoes":
+		elif item_input=="shoes":
 			cart_item.append("shoes")
 			item_print.o_colors()
 			shoes_color=input("What color would you like?:")
@@ -324,18 +323,50 @@ while store==0:
 	if item_input=="exit":
 		break
 #Calling Member Discount Function
-members=0
-while members==0
+#Login in point
+
 member_input=input("Are you a member? YES or NO:")
-	if member_input=="YES":
-		ask_username=input("What is your username")
-	elif member_input=="NO":
-		non_member=input("Would you like to become a meber for 20% off this purchase?:YES or NO")
-		if non_member=="NO":
-			break
-		if non_member=="YES"
-			#This is where the member login needs to go
-			
+if member_input=="YES":
+	member_login=0
+	while member_login==0:
+		ask_username=input("What is your username?:")
+		ask_password=input("What is your password?:")
+		if ask_username in passwords:
+			if ask_password== passwords[ask_username]:
+				member_input=="YES"
+				print("Login Successful")
+				break
+			else:
+				print("Error Password Incorrect")
+				member_quit=input("Would you like to try again? Y or N:")
+				if member_quit=="N":
+					break
+				else:
+					continue
+		else:
+			print("Error Username not found")
+			member_quit=input("Would you like to try again? Y or N:")
+			if member_quit=="N":
+				break
+			else:
+				continue	
+elif member_input=="NO":
+	non_member=input("Would you like to become a member for 10% off this purchase? YES or NO:")
+	if non_member=="NO":
+		member_input="NO"
+	if non_member=="YES":
+		q=0
+		while q==0:
+			ask_username=input("What would you like your username to be?:")
+			if ask_username in passwords:
+				print("Username already taken. Try again")
+			elif ask_username not in passwords:
+				ask_password=input("What would you lik your password to be?:")
+				passwords.update({ask_username:ask_password})
+				print("Account Created Successfully")
+				member_input="YES"
+				break
+
 			
 #Confirming Cart
 cart_cost=0
@@ -347,11 +378,34 @@ while cart_confirmation==0:
 		cart_cost=member_discount(cart_cost)
 	print("These are the items in your cart")
 	for x in range(1,len(cart_item)+1):
-		print(str(x)+".",receipt[x]["color"],receipt[x]["size"],receipt[x]["item"])
+		if receipt[x]!="removed item":
+			print(str(x)+".",receipt[x]["color"],receipt[x]["size"],receipt[x]["item"])
+		if receipt[x]=="removed item":
+			print(str(x)+". removed item")
+			continue
 	print("For $",round(float(cart_cost),2))
 	cart_answer=input("Does the cart look correct? YES or NO:")
 	if cart_answer=="YES":
-		print(receipt) #This is where the receipt needs to make a new txt file and make a receipt on that file#
+		f=open("receipt_store.txt","w")
+		f.write("This is your receipt from the Clothes Outlet")
+		f.write("\n")
+		
+		for m in range(1,len(cart_item)+1):
+			if receipt[m]!="removed item":
+				f.write(str(m))
+				f.write(". ")
+				f.write(str(receipt[m]))
+				f.write("\n")
+			if receipt[m]=="removed item":
+				f.write(str(m))
+				f.write(". ")
+				f.write("removed item")
+				f.write("\n")
+				continue
+		f.write("Order Costs:$")
+		cart_cost=(round(float(cart_cost),2))
+		f.write(str(cart_cost))
+		print("Receipt Created Successfully")
 		break
 	elif cart_answer=="NO":
 		all_items(item_print)
