@@ -155,7 +155,8 @@ passwords = {
 def member_discount(num1):
 	total=num1-(num1*.10)
 	return total
-	
+
+codes=("rollMAVS","5%OFF", "A+Project") 
 #Defining Dictionary for items
 
 item = {
@@ -386,6 +387,26 @@ while cart_confirmation==0:
 	print("For $",round(float(cart_cost),2))
 	cart_answer=input("Does the cart look correct? YES or NO:")
 	if cart_answer=="YES":
+		ask_code=input("Do you have a discount code? Y or N:")
+		if ask_code=="Y":
+			p=0
+			while p==0:
+				discount_code=input("Discount Code:")
+				if discount_code in codes:
+					cart_cost= cart_cost-(cart_cost*.05)
+					print("Discount Added Successfully")
+					break
+				elif discount_code not in codes:
+					ask_again=input("Error code not found, Would you like to try again? Y or N:")
+					if ask_again=="Y":
+						continue
+					if ask_again=="N":
+						break		
+		elif ask_code=="N":
+			break
+		else:
+			print("Try again")
+
 		f=open("receipt_store.txt","w")
 		f.write("This is your receipt from the Clothes Outlet")
 		f.write("\n")
