@@ -403,10 +403,10 @@ while cart_confirmation==0:
 					if ask_again=="N":
 						break		
 		elif ask_code=="N":
-			break
+			print("No Discount Added")
+
 		else:
 			print("Try again")
-
 		f=open("receipt_store.txt","w")
 		f.write("This is your receipt from the Clothes Outlet")
 		f.write("\n")
